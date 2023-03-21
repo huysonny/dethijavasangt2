@@ -19,6 +19,8 @@ public class main {
             System.out.println("5. in toàn bộ điện thoại ");
             System.out.println("6. in toàn bộ oto ");
             System.out.println("7. sắp xếp tất cả đơn hàng theo giá ");
+            System.out.println("8. xóa một oto theo giá tiền nhỏ hơn 3000 : ");
+            System.out.println("9. sắp xếp điện thoại theo giá tiền từ nhỏ tới lớn : ");
             choice = sc.nextInt();
             sc.nextLine();
             switch (choice) {
@@ -45,13 +47,29 @@ public class main {
                 case 7:
                     yc7();
                     break;
-
+                case 8:
+                    yc8();
+                    break;
+                case 9:
+                    yc9();
+                    break;
 
 
             }
         } while (choice != 0);
     }
 
+    private static void yc8(){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getHangHoaType()==2){
+                Oto temp=(Oto) list.get(i);
+                if(temp.getDonGia()<3000){
+                    list.remove(i);
+                }
+            }
+        }
+        System.out.println("Xóa thành công ");
+    }
     private static void yc3() {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getHangHoaType() == 1) {
@@ -128,6 +146,29 @@ public class main {
         }
         for (int i=0;i<list.size();i++){
             list.get(i).output();
+        }
+    }
+    private static void yc9(){
+        ArrayList<HangHoa> res=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getHangHoaType()==1){
+                res.add(list.get(i));
+            }
+        }
+        if(res.isEmpty()){
+            System.out.println("Hiện tại bạn chưa nhập điện thoại nào cả vui lòng nhập vào ! ");
+        }
+        for(int i=0;i<res.size();i++){
+            for(int j=i+1;j<res.size();j++){
+                if(res.get(i).getDonGia()>list.get(j).getDonGia()){
+                    HangHoa temp=res.get(i);
+                    res.set(i,res.get(j));
+                    res.set(j,temp);
+                }
+            }
+        }
+        for(int i=0;i<res.size();i++){
+            res.get(i).output();
         }
     }
 }
